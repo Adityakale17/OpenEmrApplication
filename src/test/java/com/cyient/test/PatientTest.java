@@ -11,8 +11,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.cyient.base.WebDriverWrapper;
+import com.cyient.page.AddNewPatientPage;
 import com.cyient.page.DashboardPage;
 import com.cyient.page.LoginPage;
+import com.cyient.page.PatientDashboardPage;
+import com.cyient.page.PatientFinderPage;
 
 @Test
 public class PatientTest extends WebDriverWrapper {
@@ -24,18 +27,38 @@ public class PatientTest extends WebDriverWrapper {
 		 LoginPage login = new LoginPage(driver);
 		 login.sendUsername("admin");
 		 login.sendPass("pass");
-		 //login.selectLanguageByText("English");
+		 login.selectLanguageByText("English('Indian')");
          login.clickOnLogin();
 		
          DashboardPage dashboard = new DashboardPage(driver);
          dashboard.mousehoverOnPatient();
          dashboard.clicOnPatient();
 		
+         PatientFinderPage finder = new PatientFinderPage(driver);
+ 		finder.switchToFinFrame();
+ 		finder.clickOnAddNewPatient();
+
+ 		
+ 		AddNewPatientPage addp = new AddNewPatientPage(driver);
+ 		addp.swicthConfirmFrame();
+ 		addp.chooseHonorific("Mr .");
+ 		addp.enterFirstName("PPPPPPP");
+ 		addp.lastName("CCCCCC");
+ 		addp.chooseDOB("1997-01-02");
+ 		addp.chooseGender("Male");
+ 		addp.create();
+ 		addp.switchBackFrame();
+ 		addp.swicthConfirmFrame();
+ 		addp.confirmNewPatient();
+ 		String alertText = addp.printAlertText();
 		
+ 		PatientDashboardPage dash = new PatientDashboardPage(driver);
+ 		dash.swicthToFrame();
+ 		String info = dash.patientDashboard();
+ 		System.out.println(info);
 		
-		
-		
-		
+ 		String actualvalue= driver.findElement(By.xpath("//iframe[@name='pat']")).getText();
+        Assert.assertEquals(actualvalue, "Medical Record Dashboard - PPPPPPP CCCCCC");
 		
 		
 	/*	System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver.exe");
@@ -64,7 +87,7 @@ public class PatientTest extends WebDriverWrapper {
 		//driver.findElement(By.xpath("//button[normalize-space()='Add New Patient']")).click();
 		//driver.switchTo().defaultContent();
 
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@name='pat']")));
+		/*driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@name='pat']")));
 		driver.findElement(By.id("form_fname")).sendKeys("PPPPPPP");
 		driver.findElement(By.id("form_mname")).sendKeys("SSSSSS");
 		driver.findElement(By.id("form_lname")).sendKeys("CCCCCC");
@@ -79,8 +102,7 @@ public class PatientTest extends WebDriverWrapper {
 		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='modalframe']")));
 		driver.findElement(By.xpath("//input[@value='Confirm Create New Patient']")).click();
 		
-		String actualvalue= driver.findElement(By.xpath("//iframe[@name='pat']")).getText();
-        Assert.assertEquals(actualvalue, "Medical Record Dashboard - PPPPPPP CCCCCC   ");
+		;*/
 		
 		
 		

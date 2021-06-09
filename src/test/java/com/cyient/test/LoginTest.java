@@ -31,10 +31,19 @@ public class LoginTest extends WebDriverWrapper {
 		 login.sendPass(password);
 		 login.selectLanguageByText(languageText);
          login.clickOnLogin();
+		
+		/*LoginPage login = new LoginPage(driver);
+		 login.sendUsername("admin");
+		 login.sendPass("pass");
+		 login.selectLanguageByText("English (Indian)");
+        login.clickOnLogin();
+		*/
          
          DashboardPage dashboard = new DashboardPage(driver);
-         String actualValue =  login.getErrorMessage();
-         Assert.assertEquals(actualValue, expectedValue);
+         String actualValue1 =  login.getErrorMessage();
+        Assert.assertEquals(actualValue1, expectedValue);
+         
+       //  Assert.assertEquals(dashboard.getDashboardTitle(),"Open EMR");
          
         /* DashboardPage dashboard = new DashboardPage(driver);
          String actualValue1 = dashboard.getDashboardTitle();
@@ -52,7 +61,9 @@ public class LoginTest extends WebDriverWrapper {
     }*/
 	
 	
-	@Test(dataProvider = "validData",dataProviderClass = DataProviderUtils.class )
+	
+	@Test(dataProvider = "validCredentialExcelData",dataProviderClass = DataProviderUtils.class )
+	
 	public void validCredentialTest(String username,String password,String languageText,String expectedValue)
 	{
 		
@@ -71,13 +82,20 @@ public class LoginTest extends WebDriverWrapper {
 		 login.selectLanguageByText(languageText);
          login.clickOnLogin();
         
+		/*LoginPage login = new LoginPage(driver);
+		 login.sendUsername("admin11");
+		 login.sendPass("pass1");
+		 login.selectLanguageByText("English (Indian)");
+       login.clickOnLogin();*/
          
-         DashboardPage dashboard = new DashboardPage(driver);
+        DashboardPage dashboard = new DashboardPage(driver);
          String actualValue1 = dashboard.getDashboardTitle();
-         Assert.assertEquals(actualValue1,expectedValue);		
+         Assert.assertEquals(actualValue1, expectedValue);		
+        //Assert.assertEquals(login.getErrorMessage(), "Invalid username or password");
 		
 	}
 
+	/*
 @Test
 public void validUrlTest() {
 	
@@ -88,7 +106,7 @@ public void validUrlTest() {
 	  driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
 	  
 	  driver.get("https://demo.openemr.io/openemr/interface/login/login.php?site=default");
-	  */
+	  
 	  String actualDescription = driver.findElement(By.xpath("//p[contains(text(),'most')]")).getText();
 	  Assert.assertEquals(actualDescription, "The most popular open-source Electronic Health Record and Medical Practice Management solution.");
 	  
@@ -102,5 +120,5 @@ public void validUrlTest() {
 	  String actualPassPlaceholder = driver.findElement(By.id("clearPass")).getAttribute("placeholder");
 	  Assert.assertEquals(actualPassPlaceholder, "Password:");
 	  
-}
+}*/
 }
