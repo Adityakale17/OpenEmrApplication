@@ -5,7 +5,7 @@
     <classes>
       <class name="com.cyient.test.LoginTest">
         <methods>
-          <include name="validCredentialTest" invocation-numbers="0"/>
+          <include name="validCredentialTest" invocation-numbers="0 1"/>
           <include name="teardown"/>
           <include name="setup"/>
         </methods>
